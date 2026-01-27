@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const videoSrc = new URL('../kling_20260127_4424_0.mp4', import.meta.url).href;
 
 const Hero: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const tryPlay = () => {
+      v.play().catch(() => {});
+    };
+    v.addEventListener('canplay', tryPlay, { once: true });
+    tryPlay();
+    return () => {
+      v.removeEventListener('canplay', tryPlay);
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center pt-24 pb-12">
       <div className="absolute inset-0 z-0">
         <video 
+          ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
+          preload="auto"
           className="w-full h-full object-cover scale-105"
         >
           <source src={videoSrc} type="video/mp4" />
