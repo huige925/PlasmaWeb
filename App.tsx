@@ -8,6 +8,7 @@ import QuoteSection from './components/QuoteSection';
 import Resources from './components/Resources';
 import GlobalNexus from './components/GlobalNexus';
 import Footer from './components/Footer';
+import Terminal from './components/Terminal';
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Features />
         <Advisor />
         <QuoteSection />
+        <Terminal />
         <Resources />
         <GlobalNexus />
       </main>
