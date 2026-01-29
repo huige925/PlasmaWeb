@@ -41,7 +41,8 @@ const Terminal: React.FC = () => {
     const t = setTimeout(() => setLoading(false), 600);
     const fetchNews = async () => {
       try {
-        const res = await fetch('/api/usd1-news');
+        const apiUrl = (import.meta as any).env?.VITE_USD1_NEWS_API_URL || '/api/usd1-news';
+        const res = await fetch(apiUrl);
         if (!res.ok) throw new Error('bad response');
         const data = await res.json();
         const incoming: NewsItem[] = (data?.newsList || []).map((n: any) => ({
