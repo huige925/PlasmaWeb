@@ -26,10 +26,18 @@ export default async function handler(req, res) {
       ],
       page_size: 50,
     });
+    const catMap = {
+      Institutions: '机构',
+      Developers: '开发者',
+      Consumers: '消费者',
+      Ecosystem: '生态系统',
+      DeFi: '去中心化金融'
+    };
     const newsList = (response.results || []).map((page) => {
       const props = page.properties || {};
       const title = (props.Name?.title?.[0]?.plain_text) || '';
-      const category = props.Sort?.select?.name || '';
+      const rawCat = props.Sort?.select?.name || '';
+      const category = catMap[rawCat] || rawCat || '';
       const link = props.URL?.url || '';
       const publishTime = props.Time?.date?.start || '';
       const summary = (props.Notes?.rich_text || []).map(t => t.plain_text).join('');
